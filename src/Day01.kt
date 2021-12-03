@@ -1,34 +1,15 @@
 fun main() {
     fun part1(input: List<String>): Int {
-        var count = 0
-        for (i in input.indices) {
-            if (i == 0) continue
-            val cur = input[i].toInt()
-
-            if (input[i - 1].toInt() < cur) {
-                count++
-            }
-        }
-
-        return count
+        return input.map { it.toInt() }
+            .windowed(2)
+            .count { (a, b) -> a < b }
     }
 
     fun part2(input: List<String>): Int {
-        val list = mutableListOf<String>()
-
-        var sum = 0
-        for (i in input.indices) {
-            val nums = input[i].toInt()
-            sum += nums
-            if (i <= 1) {
-                continue
-            }
-
-            val pre = if (i >= 3) input[i - 3].toInt() else 0
-            sum -= pre
-            list.add(sum.toString())
-        }
-        return part1(list)
+        return input.map { it.toInt() }
+            .windowed(3)
+            .windowed(2)
+            .count { (a, b) -> a.sum() < b.sum() }
     }
 
     // test if implementation meets criteria from the description, like:
